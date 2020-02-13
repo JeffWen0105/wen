@@ -15,7 +15,6 @@ echo -e "${B}Checking the environment...${N}"
 hadoop_home="/usr/local/hadoop/etc/hadoop/"
 awk2='awk NR=="2"'
 grep1='grep -A 1'
-cut1="cut -d "." -f1"
 cat ${hadoop_home}core-site.xml &>/dev/null
 [[ "$?" == "1" ]] && echo -e "${R}Can't find out core-site.xml,make sure your hadoop path: "${hadoop_home}" " \
 && echo -e "Terminate program...!${N}" && exit 1
@@ -28,6 +27,7 @@ if [[ -n ${haCheck} ]]
 		#自動檢查檢查XML各服務主機
 			nna="dfs.namenode.rpc-address.nncluster.nn"
 			rma="yarn.resourcemanager.hostname.rm"
+			cut1="cut -d "." -f1"
 			hadoop=$(cat ${hadoop_home}hdfs-site.xml | ${grep1} "${nna}1" | ${awk2} )
 			nn1=$(echo ${hadoop#*value>} | ${cut1} )
 			hadoop=$(cat ${hadoop_home}hdfs-site.xml | ${grep1} "${nna}2" | ${awk2} )
