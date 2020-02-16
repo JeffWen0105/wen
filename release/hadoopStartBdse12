@@ -59,11 +59,11 @@ if [[ -n ${haCheck} ]]
 				|| echo -e "${R}ZooKeeper zk${n} exited${N}" 
 				n=$((n+1))
 			done
-		#Stop NameNode
+		#Start NameNode
 			echo "Starting NameNode..pls,wait"
 			ssh ${nn1} ${hadoop_sbin}start-dfs.sh &>/dev/null
 			n=1
-			for nn in ${nn1} ${nn2}			
+			for nn in ${nn1} ${nn2}
 			do
 				ssh ${nn} jps &> /tmp/out
 				cat /tmp/out | grep 'NameNode' &>/dev/null
@@ -75,21 +75,21 @@ if [[ -n ${haCheck} ]]
 			echo "Starting ResourceManager..pls,wait"
 			ssh ${rm1} ${hadoop_sbin}start-yarn.sh &>/dev/null
 			n=1
-			for rm in ${rm1} ${rm2} 
+			for rm in ${rm1} ${rm2}
 			do
 				ssh ${rm} jps &> /tmp/out
 				cat /tmp/out | grep 'ResourceManager' &>/dev/null
 				[[ "$?" == "0" ]] && echo -e "${G}ResourceManager rm${n} started${N}"   \
-				|| echo -e "${R}ResourceManager rm${n} exited${N}" 
+				|| echo -e "${R}ResourceManager rm${n} exited${N}"
 				n=$((n+1))
-			done		
+			done
 		#Start JobHistoryServer
 			echo "Starting JobHistoryServer..pls,wait"
 			ssh ${jhs} ${hadoop_bin}mapred --daemon start historyserver &>/dev/null
 			ssh ${jhs} jps &> /tmp/out
 			cat /tmp/out | grep 'JobHistoryServer' &>/dev/null
 			[[ "$?" == "0" ]] && echo -e "${G}JobHistoryServer started${N}" && echo "${jhs}.example.org" \
-			|| echo -e "${R}JobHistoryServer exited${N}"  
+			|| echo -e "${R}JobHistoryServer exited${N}"
 	else
 		#一般叢集模式
 		#自動開啟全部JAVA程式

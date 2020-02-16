@@ -1,0 +1,35 @@
+#!/bin/bash 
+
+#自動複製檔案到每一台電腦
+#無法自動檢查叢集是否正在運作中
+#依據/etc/hosts 名單
+#針對名單中的每一台 example.org 進行複製
+#限定hadoop帳號才能使用
+#參數1 要複製的檔案
+#參數2 複製到其他電腦的路徑
+
+
+# Copyright (c) IIIedu BDSE.
+# BDSE12 Project <contactus@iii.org.tw>
+# 指導老師：楊禎文老師
+
+n=$(whoami)
+[[ ${n} != "hadoop" ]] && echo "oops, pls return to hadoop" && exit 1
+[[ -z $1 ]] && echo -e "\033[0;31moops, There is no parameter #1 !!\033[0m" && exit 1
+[[ -z $2 ]] && echo -e "\033[0;31moops,There is no parameter #2 !!\033[0m" && exit 1
+name=$(cat /etc/hosts | grep 'example.org' | cut -d " " -f3)
+n=1
+for nn in $name
+do
+	self=$(hostname)
+    selfCheck=$(echo $(echo $name | cut -d " " -f${n}))
+	[[ $selfCheck != $self ]] && \
+	echo " scp $1 $(echo $name | cut -d " " -f${n}):$2 "
+    n=$((n+1))
+done
+
+
+
+
+
+

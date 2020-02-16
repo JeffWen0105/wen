@@ -1,0 +1,126 @@
+#!/bin/bash
+
+#自動開啟一般叢集或是HA叢集全部JAVA程式
+#限定hadoop帳號才能使用
+
+# Copyright (c) IIIedu BDSE.
+# BDSE12 Project <contactus@iii.org.tw>
+# 指導老師：楊禎文老師
+
+B='\033[1;34m'
+G='\033[0;32m'
+N='\033[0m'
+R='\033[0;31m'
+echo -e "${B}Checking the environment...${N}"
+hadoop_conf="/usr/local/hadoop/etc/hadoop/"
+hadoop_bin="/usr/local/hadoop/bin/"
+hadoop_sbin="/usr/local/hadoop/sbin/"
+zookeeper_bin="/usr/local/zookeeper/bin/"
+awk2='awk NR=="2"'
+grep1='grep -A 1'
+cat ${hadoop_conf}core-site.xml &>/dev/null
+[[ "$?" == "1" ]] && echo -e "${R}Can't find out core-site.xml,make sure your hadoop path: "${hadoop_conf}" " \
+&& echo -e "Terminate program...!${N}" && exit 1
+n=$(whoami)
+[[ ${n} != "hadoop" ]] && echo "oops, pls return to hadoop" && exit 1
+haCheck=$(cat ${hadoop_conf}core-site.xml  | ${grep1} "fs.defaultFS" | ${awk2}| grep 'cluster' )
+[[ -n ${haCheck} ]] && echo -e "${B}Your cluster : HA cluster${N}" || echo "${B}Your cluster : Normal cluster${N}"
+if [[ -n ${haCheck} ]]
+
+	then
+		#HA叢集模式
+		#自動開啟全部JAVA程式
+			nna="dfs.namenode.rpc-address.nncluster.nn"
+			rma="yarn.resourcemanager.hostname.rm"
+			cut1="cut -d "." -f1"
+			hadoop=$(cat ${hadoop_conf}hdfs-site.xml | ${grep1} "${nna}1" | ${awk2} )
+			nn1=$(echo ${hadoop#*value>} | ${cut1} )
+			hadoop=$(cat ${hadoop_conf}hdfs-site.xml | ${grep1} "${nna}2" | ${awk2} )
+			nn2=$(echo ${hadoop#*value>} | ${cut1} )
+			hadoop=$(cat ${hadoop_conf}yarn-site.xml | ${grep1} "${rma}1" | ${awk2} )
+			rm1=$(echo ${hadoop#*value>} | ${cut1} )	
+			hadoop=$(cat ${hadoop_conf}yarn-site.xml | ${grep1} "${rma}2" | ${awk2} )
+			rm2=$(echo ${hadoop#*value>} | ${cut1} )
+			hadoop=$(cat ${hadoop_conf}mapred-site.xml | ${grep1} "mapreduce.jobhistory.address" | ${awk2} )
+			jhs=$(echo ${hadoop#*value>} | ${cut1} )
+			hadoop=$(cat ${hadoop_conf}yarn-site.xml | ${grep1} "yarn.resourcemanager.zk-address" | ${awk2} )
+			zk1=$(echo ${hadoop#*value>} | ${cut1} )
+			zk2=$(echo ${hadoop#*value>} | cut -d "," -f2 | ${cut1} )
+			zk3=$(echo ${hadoop#*value>} | cut -d "," -f3 | ${cut1} )
+		#Start ZooKeeper
+			echo "Starting ZooKeeper..pls,wait"
+			n=1
+			for zk in ${zk1} ${zk2} ${zk3}
+			do
+				ssh ${zk} ${zookeeper_bin}zkServer.sh start  &>/dev/null
+				ssh ${zk} jps &> /tmp/out
+				cat /tmp/out | grep 'QuorumPeerMain' &>/dev/null
+				[[ "$?" == "0" ]] && echo -e "${G}ZooKeeper zk${n} started${N}"  && echo "${zk}.example.org" \
+				|| echo -e "${R}ZooKeeper zk${n} exited${N}" 
+				n=$((n+1))
+			done
+		#Start NameNode
+			echo "Starting NameNode..pls,wait"
+			ssh ${nn1} ${hadoop_sbin}start-dfs.sh &>/dev/null
+			n=1
+			for nn in ${nn1} ${nn2}
+			do
+				ssh ${nn} jps &> /tmp/out
+				cat /tmp/out | grep 'NameNode' &>/dev/null
+				[[ "$?" == "0" ]] && echo -e "${G}NameNode nn${n} started${N}"   \
+				|| echo -e "${R}NameNode nn${n} exited${N}" 
+				n=$((n+1))
+			done		
+		#Start ResourceManager
+			echo "Starting ResourceManager..pls,wait"
+			ssh ${rm1} ${hadoop_sbin}start-yarn.sh &>/dev/null
+			n=1
+			for rm in ${rm1} ${rm2}
+			do
+				ssh ${rm} jps &> /tmp/out
+				cat /tmp/out | grep 'ResourceManager' &>/dev/null
+				[[ "$?" == "0" ]] && echo -e "${G}ResourceManager rm${n} started${N}"   \
+				|| echo -e "${R}ResourceManager rm${n} exited${N}"
+				n=$((n+1))
+			done
+		#Start JobHistoryServer
+			echo "Starting JobHistoryServer..pls,wait"
+			ssh ${jhs} ${hadoop_bin}mapred --daemon start historyserver &>/dev/null
+			ssh ${jhs} jps &> /tmp/out
+			cat /tmp/out | grep 'JobHistoryServer' &>/dev/null
+			[[ "$?" == "0" ]] && echo -e "${G}JobHistoryServer started${N}" && echo "${jhs}.example.org" \
+			|| echo -e "${R}JobHistoryServer exited${N}"
+	else
+		#一般叢集模式
+		#自動開啟全部JAVA程式
+			hadoop=$(cat ${hadoop_home}core-site.xml  | ${grep1} "fs.defaultFS" | ${awk2} )
+			nna=$(echo ${hadoop#*://} | ${cut1} )
+			hadoop=$(cat ${hadoop_home}yarn-site.xml | ${grep1} "yarn.resourcemanager.hostname" | ${awk2} )
+			rma=$(echo ${hadoop#*value>} | ${cut1} )
+			hadoop=$(cat ${hadoop_home}apred-site.xml | ${grep1} "mapreduce.jobhistory.address" | ${awk2} )
+		#Stop NameNode
+			echo "Starting NameNode..pls,wait"
+			ssh ${nna} ${hadoop_sbin}start-dfs.sh &>/dev/null
+			ssh ${nna} jps &> /tmp/out
+			cat /tmp/out | grep 'NameNode' &>/dev/null
+			[[ "$?" == "0" ]] && echo -e "${G}NameNode nn${n} started${N}"   \
+			|| echo -e "${R}NameNode nn${n} exited${N}" 
+		#Stop ResourceManager
+			echo "Starting  ResourceManager..pls,wait"
+			ssh ${rma} ${hadoop_sbin}start-yarn.sh &>/dev/null
+			ssh ${rma} jps &> /tmp/out
+			cat /tmp/out | grep 'ResourceManager' &>/dev/null
+			[[ "$?" == "0" ]] && echo -e "${G}ResourceManager rm${n} started${N}"   \
+			|| echo -e "${R}ResourceManager rm${n} exited${N}" 	
+		#Stop JobHistoryServer
+			echo "Starting JobHistoryServer..pls,wait"
+			ssh ${jhs} ${hadoop_bin}mapred --daemon start historyserver &>/dev/null
+			ssh ${jhs} jps &> /tmp/out
+			cat /tmp/out | grep 'JobHistoryServer' &>/dev/null
+			[[ "$?" == "0" ]] && echo -e "${G}JobHistoryServer started${N}" && echo "${jhs}.example.org" \
+			|| echo -e "${R}JobHistoryServer exited${N}"  	
+
+
+fi
+
+
