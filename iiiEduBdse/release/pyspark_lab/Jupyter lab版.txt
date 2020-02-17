@@ -1,0 +1,1 @@
+#如果要使用notebook，請至 main 資料夾裡 Dockerfile 第17行註解掉，刪掉image後再重跑一次程式就有了
