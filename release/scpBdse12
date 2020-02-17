@@ -24,7 +24,7 @@ do
 	self=$(hostname)
     selfCheck=$(echo $(echo $name | cut -d " " -f${n}))
 	[[ $selfCheck != $self ]] && \
-	echo " scp $1 $(echo $name | cut -d " " -f${n}):$2 "
+	 scp $1 $(echo $name | cut -d " " -f${n}):$2 
     n=$((n+1))
 done
 
