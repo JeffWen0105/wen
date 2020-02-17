@@ -4,7 +4,7 @@
 
 使用說明:
 1.啟動 Dokcer 伺服器(Docker Quickstart Terminal)
-2.並將 bdse_pyspark 資料夾複製到 C:\使用者\任意目錄
+2.並將 bdse_lab 資料夾複製到 C:\使用者\任意目錄
 3.於 Docker 終端機 cd 到第2步驟建立於家目錄路徑
 4.輸入 bash bdse_pyspark.sh 或是 ./bdse_pyspark.sh 即可使用自動化腳本 
 5.運行 Container 可於 worker 同層目錄檢視 sample 目錄，內有兩個演算法的筆記本範例
