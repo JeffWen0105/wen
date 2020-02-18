@@ -26,10 +26,10 @@ do
     selfCheck=$(echo $(echo $name | cut -d " " -f${n}))
 	[[ -z $2 ]] && \
 	[[ $selfCheck != $self ]] && \
-	echo " scp $1 $(echo $name | cut -d " " -f${n}):${myPath} "
+		scp $1 $(echo $name | cut -d " " -f${n}):${myPath} 
 	[[ -n $2 ]] && \
 	[[ $selfCheck != $self ]] && \
-	echo " scp $1 $(echo $name | cut -d " " -f${n}):$2 "
+		scp $1 $(echo $name | cut -d " " -f${n}):$2 
     n=$((n+1))
 done
 
