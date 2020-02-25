@@ -10,8 +10,8 @@
 		zookeeper:3.5.7
 		kafka:2.4.0
 	Hadoop主要設定檔: hadoop-env.sh、core-site.xml、mapred-site.xml、
-					  mapred-site.xml、yarn-site.xml、hdfs-site.xml、
-					  workers
+			 mapred-site.xml、yarn-site.xml、hdfs-site.xml、
+			 workers
 	Spark主要設定檔:  spark-env.sh、spark-defaults.conf
 使用說明:
 	0.  bdse.7z 解壓縮後進入bdse資料夾，並對 bdse.vmx 案右鍵，
@@ -33,7 +33,7 @@
 	3. 啟動叢集:		
 		(1) start-dfs.sh 						#啟動Namenode
 		(2) start-yarn.sh						#啟動ResourceManager
-		(3) mapred --daemon start historyserver	#啟動HistoryServer
+		(3) mapred --daemon start historyserver				#啟動HistoryServer
 	
 	4. 啟動筆記本:
 		(1) jupyter notebook 			# jupyter lab
@@ -41,7 +41,7 @@
 			# ex. 192.168.1.45:8591 	# 浮動IP請先查詢
 			
 	5. 關閉叢集:
-		(1) mapred --daemon stop historyserver	#關閉HistoryServer
+		(1) mapred --daemon stop historyserver				#關閉HistoryServer
 		(2) stop-yarn.sh						#關閉ResourceManager
 		(3) stop-dfs.sh 						#關閉Namenode
 	
@@ -49,7 +49,7 @@
 		(1) bdseStartAll
 		(2) bdseStopAll
 	*. 節點自動檢查:
-			bdseNodeCheck
+		bdseNodeCheck
 
 -------------------------------------------------------------------------------
 
