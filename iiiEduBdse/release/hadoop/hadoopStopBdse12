@@ -97,7 +97,8 @@ if [[ -n ${haCheck} ]]
 			nna=$(echo ${hadoop#*://} | ${cut1} )
 			hadoop=$(cat ${hadoop_conf}yarn-site.xml | ${grep1} "yarn.resourcemanager.hostname" | ${awk2} )
 			rma=$(echo ${hadoop#*value>} | ${cut1} )
-			hadoop=$(cat ${hadoop_conf}mapred-site.xml | ${grep1} "mapreduce.jobhistory.address" | ${awk2} )		
+			hadoop=$(cat ${hadoop_conf}mapred-site.xml | ${grep1} "mapreduce.jobhistory.address" | ${awk2} )
+			jhs=$(echo ${hadoop#*value>} | ${cut1} )
 		#Stop JobHistoryServer
 			echo "stopping JobHistoryServer..pls,wait"
 			ssh ${jhs} ${hadoop_bin}mapred --daemon stop historyserver &>/dev/null
