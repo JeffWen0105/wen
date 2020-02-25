@@ -1,4 +1,4 @@
-# Copyright (c) IIIedu BDSE12.
+# Copyright (c) IIIedu BDSE.
 歡迎使用Hadoop偽叢集式伺服器版:
 	要求程式: Vmware player等級以上
 	預設系統配置: 8 G, 4 Cores
