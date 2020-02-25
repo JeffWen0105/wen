@@ -1,9 +1,10 @@
 歡迎使用hadoop自動啟動腳本，簡化複雜指令操作
 使用說明:
 
-1.將腳本放入/usr/bin，修改執行權限
-ex. ~$ sudo mv hadoopStartBdse12 /usr/bin
-ex. /usr/bin$ sudo chmod 777 hadoopStartBdse12
+1.腳本修改執行權限，並將腳本放入/usr/local/bin 內，
+ 
+ex. ~$ sudo chmod 777 hadoopStartBdse12
+ex. ~$ sudo mv hadoopStartBdse12 /usr/local/bin
 
 2.執行方式(除"scpBdse12"，其餘腳本僅限Hadoop帳號執行):
 	
