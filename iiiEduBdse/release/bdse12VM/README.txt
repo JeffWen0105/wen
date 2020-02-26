@@ -31,8 +31,8 @@
 	2. 切換hadoop帳號，帳號密碼均為: hadoop
 
 	3. 啟動叢集:		
-		(1) start-dfs.sh 						#啟動Namenode
-		(2) start-yarn.sh						#啟動ResourceManager
+		(1) start-dfs.sh 						#啟動HDFS
+		(2) start-yarn.sh						#啟動Yarn
 		(3) mapred --daemon start historyserver				#啟動HistoryServer
 	
 	4. 啟動筆記本:
@@ -43,8 +43,8 @@
 			
 	5. 關閉叢集:
 		(1) mapred --daemon stop historyserver				#關閉HistoryServer
-		(2) stop-yarn.sh						#關閉ResourceManager
-		(3) stop-dfs.sh 						#關閉Namenode
+		(2) stop-yarn.sh						#關閉HDFS
+		(3) stop-dfs.sh 						#關閉Yarn
 	
 	*. 懶人開(關)叢集:
 		(1) bdseStartAll
