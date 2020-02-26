@@ -16,7 +16,7 @@
 使用說明:
 	0.  bdse.7z 解壓縮後進入bdse資料夾，並對 bdse.vmx 案右鍵，
 		執行Open with VMware Player，並選擇 " I copied it "，
-		產生新的網卡MAC位置
+		產生新的網卡MAC地址
 	
 	注  1. 第一次使用進入系統或是更換網域，請務必執行下方指令:
 			sudo bdseChangHosts 
@@ -39,6 +39,7 @@
 		(1) jupyter notebook 			# jupyter lab
 		(2) 到瀏覽器輸入該虛擬機取得的浮動IP，並加上8591 port埠號
 			# ex. 192.168.1.45:8591 	# 浮動IP請先查詢
+		(3) 進入筆記本密碼為空字串，直接點Log in 即可使用
 			
 	5. 關閉叢集:
 		(1) mapred --daemon stop historyserver				#關閉HistoryServer
