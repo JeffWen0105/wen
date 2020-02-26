@@ -53,7 +53,7 @@
 		bdseNodeCheck
 		
 	*. Java程式網頁UI的port埠號:
-		到瀏覽器輸入該虛擬機取得的浮動IP，並加上port埠號
+		叢集啟動後，於瀏覽器輸入該虛擬機取得的浮動IP，並加上port埠號
 		ex. 192.168.1.45:port number		# 浮動IP請先查詢
 		1. NameNode : 9870
 		2. ResourceManager : 8088
