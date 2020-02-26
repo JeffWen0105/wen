@@ -31,9 +31,9 @@
 	2. 切換hadoop帳號，帳號密碼均為: hadoop
 
 	3. 啟動叢集:		
-		(1) start-dfs.sh 						#啟動HDFS
-		(2) start-yarn.sh						#啟動Yarn
-		(3) mapred --daemon start historyserver				#啟動HistoryServer
+		(1) start-dfs.sh 						# 啟動HDFS
+		(2) start-yarn.sh						# 啟動Yarn
+		(3) mapred --daemon start historyserver				# 啟動HistoryServer
 	
 	4. 啟動筆記本:
 		(1) jupyter notebook 			# jupyter lab
@@ -42,15 +42,24 @@
 		(3) 進入筆記本密碼為空字串，直接點Log in 即可使用
 			
 	5. 關閉叢集:
-		(1) mapred --daemon stop historyserver				#關閉HistoryServer
-		(2) stop-yarn.sh						#關閉HDFS
-		(3) stop-dfs.sh 						#關閉Yarn
+		(1) mapred --daemon stop historyserver				# 關閉HistoryServer
+		(2) stop-yarn.sh						# 關閉HDFS
+		(3) stop-dfs.sh 						# 關閉Yarn
 	
 	*. 懶人開(關)叢集:
 		(1) bdseStartAll
 		(2) bdseStopAll
 	*. 節點自動檢查:
 		bdseNodeCheck
+		
+	*. Java程式網頁UI的port埠號:
+		到瀏覽器輸入該虛擬機取得的浮動IP，並加上port埠號
+		ex. 192.168.1.45:port number		# 浮動IP請先查詢
+		1. NameNode : 9870
+		2. ResourceManager : 8088
+		3. HistoryServer : 19888
+		4. Spark : 8080		# Spark Standalon
+	
 
 該虛擬機秉持GNU自由軟體精神，鼓勵各位修改程式碼使符合使用者本身的服務需求!!
 
