@@ -4,13 +4,28 @@
 
 使用說明:
 1.啟動 Dokcer 伺服器(Docker Quickstart Terminal)
-2.並將 bdse_lab 資料夾複製到 C:\使用者\任意目錄
-3.於 Docker 終端機 cd 到第2步驟建立於家目錄路徑
+2.並將 pyspark_lab 資料夾複製到 C:\使用者\任意目錄
+3.於 Docker 終端機 cd 到第2步驟建立於家目錄的路徑
 4.輸入 bash bdse_pyspark.sh 或是 ./bdse_pyspark.sh 即可使用自動化腳本 
-5.運行 Container 可於 worker 同層目錄檢視 sample 目錄，內有兩個演算法的筆記本範例
+5.運行容器後可於 worker 同層目錄檢視 sample 目錄，內有兩個演算法的筆記本範例
+
+注. 欲使用查看Spark UI 程式運作狀態，請於Pyspark容器啟動後，瀏覽器輸入 192.168.99.100:4040
 
 注.此腳本建議於Windows環境使用，Linux及Mac會有些許功能無法實現
 (EX. clip, fmt -u, docker-machine等)
+
+---
+
+附錄:
+	筆記本取得SparkSession:
+		# Import pyspark套件
+		1.  from pyspark.sql import SparkSession
+		# 建立parkSession
+		2. 	spark = SparkSession.builder \
+			.appName('bdse12') \
+			.master("local[*]")\
+			.getOrCreate()	
+	
 
 該腳本秉持GNU自由軟體精神，鼓勵各位修改程式使符合使用者本身的服務需求!!
 
