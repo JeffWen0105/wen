@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# 自動檢查HA狀態，並將即時訊息傳到Line裡
+# 限定hadoop帳號才能使用
+# Hadoop 要有 HA
+# 擁有Line notify連動服務
+
+# Copyright (c) IIIedu BDSE.
+# BDSE12 Project <contactus@iii.org.tw>
+# 指導老師：楊禎文老師
+
+
 B='\033[1;34m'
 G='\033[0;32m'
 N='\033[0m'
