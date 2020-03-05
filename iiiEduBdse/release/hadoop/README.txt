@@ -21,6 +21,7 @@ ex. ~$ sudo mv hadoopStartBdse12 /usr/local/bin
 		ex. /usr/loacl/hadoop/etc/hadoop/$ scpBdse12 core-site.xml  /usr/loacl/hadoop/etc/hadoop/ 
 		# 第一個參數為欲複製之檔案 ， 第二個參數為複製到其它電腦的路徑
 
+注: 請先確定上述檔案均為Unix換行格式!!
 
 該腳本秉持GNU自由軟體精神，鼓勵各位修改程式使符合使用者本身的服務需求!!
 
