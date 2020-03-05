@@ -4,11 +4,14 @@
 1. 將 bdseHadoopNotify 整份資料夾放置家目錄並修改執行權限
  	ex. 使用FileZilla等相關軟體匯入資料夾至 hadoop 帳號的家目錄內
 	ex. ~$ chmod 770 bdseHadoopNotify/bdseHadoopNotify  #第一個為目錄 #第二個才是腳本
+	
+2. 編輯bdse-conf.txt並輸入正確 Line Notify 權杖
+	ex. ~$ nano bdseHadoopNotify/bdse-conf.txt
 
-2. 執行方式(也可以CD 至 bdseHadoopNotify 目錄在執行，依個人喜好修改執行方式)	
+3. 執行方式(也可以CD 至 bdseHadoopNotify 目錄在執行，依個人喜好修改執行方式)	
 	ex. ~$ bash bdseHadoopNotify/bdseHadoopNotify  # .bdseHadoopNotify/ bdseHadoopNotify 
 
-3. 停止方式
+4. 停止方式
 	(1). Ctrl-Z 將程式丟入背景
     (2). 正常模式停止程序
 		ex. ~$ kill -15 %1  # %後面帶程序工作號碼(數字)
