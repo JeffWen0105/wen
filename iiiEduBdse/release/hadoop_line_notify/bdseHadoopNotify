@@ -1,0 +1,98 @@
+#!/bin/bash
+
+B='\033[1;34m'
+G='\033[0;32m'
+N='\033[0m'
+R='\033[0;31m'
+hadoop_conf="/usr/local/hadoop/etc/hadoop/"
+nna="dfs.namenode.rpc-address.nncluster.nn"
+rma="yarn.resourcemanager.hostname.rm"
+awk2='awk NR=="2"'
+grep1='grep -A 1'
+cut1="cut -d "." -f1"
+
+# 基本環境檢查
+
+echo -e "${B}Checking the environment...${N}"
+n=$(whoami)
+[[ ${n} != "hadoop" ]] && echo "Oops, pls return to hadoop" && exit 1
+cat ${hadoop_conf}core-site.xml &>/dev/null
+[[ "$?" == "1" ]] && \
+echo -e "${R}Can't find out core-site.xml,make sure your hadoop path: "${hadoop_conf}" " && \
+echo -e "Terminate program...!${N}" && exit 1
+ls  bdse_linenotify.py bdse-conf.txt &>/dev/null
+[[ "$?" != "0" ]] && \
+echo -e "${R}Oops, Can't find out bdse_linenotify.py or bdse-conf.txt..${N}" && exit 1
+conf=$(cat bdse-conf.txt)
+ [[ ! $conf ]] && echo -e "${R}Oops, Configuration file is null..${N}" && exit 1
+
+# 必要變數
+
+hadoop=$(cat ${hadoop_conf}hdfs-site.xml | ${grep1} "${nna}1" | ${awk2} )
+nn1=$(echo ${hadoop#*value>} | ${cut1} )
+hadoop=$(cat ${hadoop_conf}hdfs-site.xml | ${grep1} "${nna}2" | ${awk2} )
+nn2=$(echo ${hadoop#*value>} | ${cut1} )
+hadoop=$(cat ${hadoop_conf}yarn-site.xml | ${grep1} "${rma}1" | ${awk2} )
+rm1=$(echo ${hadoop#*value>} | ${cut1} )	
+hadoop=$(cat ${hadoop_conf}yarn-site.xml | ${grep1} "${rma}2" | ${awk2} )
+rm2=$(echo ${hadoop#*value>} | ${cut1} )
+echo "nn1_ok" > /tmp/bdse_nn1
+echo "nn2_ok" > /tmp/bdse_nn2
+echo "rm1_ok" > /tmp/bdse_rm1
+echo "rm2_ok" > /tmp/bdse_rm2
+
+echo -e "${G}程式檢測中....${N}"
+
+
+while true
+do
+	# 檢查NameNode狀態
+	n=1
+	for nn in ${nn1} ${nn2}			
+	do
+		status=$(cat /tmp/bdse_nn${n})
+		ssh ${nn} jps &> /tmp/out
+		cat /tmp/out | grep 'NameNode' &>/dev/null
+		[[ "$?" == "0" ]]  \
+		&& [[ "$status" == "nn${n}_f" ]] &&\
+		python3 bdse_linenotify.py good NameNode${n}  &&\
+		echo "nn${n}_ok" > /tmp/bdse_nn${n} &&\
+		echo -e "${G}NameNode${n}恢復...${N}"
+		
+		status=$(cat /tmp/bdse_nn${n})
+		ssh ${nn} jps &> /tmp/out
+		cat /tmp/out | grep 'NameNode' &>/dev/null
+		[[ "$?" == "1" ]] \
+		&& [[ "$status" == "nn${n}_ok" ]] &&\
+		python3 bdse_linenotify.py bad NameNode${n}  &&\
+		echo "nn${n}_f" > /tmp/bdse_nn${n} && \
+		echo -e "${R}NameNode${n}停止...${N}"
+		
+		n=$((n+1))
+	done
+	
+	# 檢查ResourceManager狀態
+	n=1
+	for rm in ${rm1} ${rm2}			
+	do
+		status=$(cat /tmp/bdse_rm${n})
+		ssh ${rm} jps &> /tmp/out
+		cat /tmp/out | grep 'ResourceManager' &>/dev/null
+		[[ "$?" == "0" ]]  \
+		&& [[ "$status" == "rm${n}_f" ]] &&\
+		python3 bdse_linenotify.py good ResourceManager${n}  &&\
+		echo "rm${n}_ok" > /tmp/bdse_rm${n} && \
+		echo -e "${G}ResourceManager${n}恢復...${N}"
+		
+		status=$(cat /tmp/bdse_rm${n})
+		ssh ${rm} jps &> /tmp/out
+		cat /tmp/out | grep 'ResourceManager' &>/dev/null
+		[[ "$?" == "1" ]] \
+		&& [[ "$status" == "rm${n}_ok" ]]  &&\
+		python3 bdse_linenotify.py bad ResourceManager${n}  &&\
+		echo "rm${n}_f" > /tmp/bdse_rm${n} && \
+		echo -e "${R}ResourceManager${n}停止...${N}"
+		
+		n=$((n+1))	
+	done
+done
