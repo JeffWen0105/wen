@@ -46,13 +46,19 @@ hadoop=$(cat ${hadoop_conf}yarn-site.xml | ${grep1} "${rma}1" | ${awk2} )
 rm1=$(echo ${hadoop#*value>} | ${cut1} )	
 hadoop=$(cat ${hadoop_conf}yarn-site.xml | ${grep1} "${rma}2" | ${awk2} )
 rm2=$(echo ${hadoop#*value>} | ${cut1} )
-echo "nn1_ok" > /tmp/bdse_nn1
-echo "nn2_ok" > /tmp/bdse_nn2
-echo "rm1_ok" > /tmp/bdse_rm1
-echo "rm2_ok" > /tmp/bdse_rm2
+
+n=1
+for nn in x y
+do
+        echo "nn${n}_ok" > /tmp/bdse_nn${n}
+        echo "rm${n}_ok" > /tmp/bdse_rm${n}
+        n=$((n+1))
+done
+
+
+# 運行程序
 
 echo -e "${G}程式檢測中....${N}"
-
 
 while true
 do
@@ -76,8 +82,7 @@ do
 		&& [[ "$status" == "nn${n}_ok" ]] &&\
 		python3 bdse_linenotify.py bad NameNode${n}  &&\
 		echo "nn${n}_f" > /tmp/bdse_nn${n} && \
-		echo -e "${R}NameNode${n}停止...${N}"
-		
+		echo -e "${R}NameNode${n}停止...${N}"	
 		n=$((n+1))
 	done
 	
@@ -101,8 +106,7 @@ do
 		&& [[ "$status" == "rm${n}_ok" ]]  &&\
 		python3 bdse_linenotify.py bad ResourceManager${n}  &&\
 		echo "rm${n}_f" > /tmp/bdse_rm${n} && \
-		echo -e "${R}ResourceManager${n}停止...${N}"
-		
+		echo -e "${R}ResourceManager${n}停止...${N}"	
 		n=$((n+1))	
 	done
 done
