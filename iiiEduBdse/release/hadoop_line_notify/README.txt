@@ -9,7 +9,7 @@
 	ex. ~$ nano bdseHadoopNotify/bdse-conf.txt
 
 3. 執行方式(也可以CD 至 bdseHadoopNotify 目錄在執行，依個人喜好修改執行方式)	
-	ex. ~$ bash bdseHadoopNotify/bdseHadoopNotify  # .bdseHadoopNotify/ bdseHadoopNotify 
+	ex. ~$ bash bdseHadoopNotify/bdseHadoopNotify  
 
 4. 停止方式
 	(1). Ctrl-Z 將程式丟入背景
