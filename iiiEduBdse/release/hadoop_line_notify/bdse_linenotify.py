@@ -18,8 +18,8 @@ def get_conf():
 
 # 設定時間日期格式
 def time_set():
-    ISOTIMEFORMAT = '%Y/%m/%d %H:%M'
-    the_time = datetime.datetime.now().strftime(ISOTIMEFORMAT)
+    iso_time_format = '%Y/%m/%d %H:%M'
+    the_time = datetime.datetime.now().strftime(iso_time_format)
     return the_time
 
 # 向Line Notify 請求服務    
