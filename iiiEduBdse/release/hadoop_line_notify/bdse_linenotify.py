@@ -1,4 +1,3 @@
-
 # Copyright (c) IIIedu BDSE.
 # BDSE12 Project <contactus@iii.org.tw>
 # 指導老師：楊禎文老師
@@ -9,7 +8,7 @@ import requests
 import datetime
 
 
-
+# 取得Token
 def get_conf():
     f = open('bdse-conf.txt', 'r')
     token = f.read()
@@ -17,11 +16,13 @@ def get_conf():
     f.close()
     return token
 
+# 設定時間日期格式
 def time_set():
     ISOTIMEFORMAT = '%Y/%m/%d %H:%M'
     the_time = datetime.datetime.now().strftime(ISOTIMEFORMAT)
     return the_time
-    
+
+# 向Line Notify 請求服務    
 def line_notify(state,token,message):
         requests.post(
             url='https://notify-api.line.me/api/notify',
