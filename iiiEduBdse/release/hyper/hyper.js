@@ -104,7 +104,7 @@ module.exports = {
   plugins: [
 	"hyper-pane", // 分割視窗可以使用 Ctrl + ALT up/down/lift/right 切換視窗
 	"hyperpower", // 很炫的差件
-	"hyper-native" // 比照 MAC OS 的終端機樣式
+	"hyper-native" // 比照 MAC OS 的終端機樣式（純白色底）
 	],
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
