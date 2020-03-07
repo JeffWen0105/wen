@@ -19,7 +19,7 @@
 		產生新的網卡MAC地址
 	
 	注  1. 第一次使用進入系統或是更換網域，請務必執行下方指令:
-			sudo bdseChangHosts 
+			bdse@bdse:~$ sudo bdseChangHosts 
 			# 依據DHCP取得浮動IP 修訂Hosts清單IP
 			# 查詢浮動IP方式: hostname -I
 			
