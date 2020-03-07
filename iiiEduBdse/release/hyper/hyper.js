@@ -102,7 +102,9 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-	"hyper-alt-click","hyperpower","hyper-native"
+	"hyper-pane", // 分割視窗可以使用 Ctrl + ALT up/down/lift/right 切換視窗
+	"hyperpower", // 很炫的差件
+	"hyper-native" // 比照 MAC OS 的終端機樣式
 	],
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
