@@ -58,7 +58,7 @@
 		1. NameNode : 9870
 		2. ResourceManager : 8088
 		3. HistoryServer : 19888
-		4. Spark : 8080		# Spark Standalon
+		4. Spark : 8080				# Spark Standalon
 	
 
 該虛擬機秉持GNU自由軟體精神，鼓勵各位修改程式碼使符合使用者本身的服務需求!!
