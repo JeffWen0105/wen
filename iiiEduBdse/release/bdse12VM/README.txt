@@ -10,8 +10,7 @@
 		zookeeper:3.5.7
 		kafka:2.4.0
 	Hadoop主要設定檔: hadoop-env.sh、core-site.xml、mapred-site.xml、
-			 mapred-site.xml、yarn-site.xml、hdfs-site.xml、
-			 workers
+			 yarn-site.xml、hdfs-site.xml、workers
 	Spark主要設定檔:  spark-env.sh、spark-defaults.conf
 使用說明:
 	0.  bdse.7z 解壓縮後進入bdse資料夾，並對 bdse.vmx 案右鍵，
