@@ -87,7 +87,7 @@
 		3.  ./bin/spark-submit \
 			--class org.apache.spark.examples.SparkPi \
 			--master spark://bdse.example.org:7077 \
-			/usr/local/spark/bin/examples/jars/spark-examples*.jar \
+			/usr/local/spark/examples/jars/spark-examples*.jar \
 			10
 		
 	使用kafka 方法:
