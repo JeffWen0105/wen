@@ -88,7 +88,7 @@
 			--class org.apache.spark.examples.SparkPi \
 			--master spark://bdse.example.org:7077 \
 			/usr/local/spark/examples/jars/spark-examples*.jar \
-			10
+			10 2>/dev/null
 		
 	使用kafka 方法:
 		# 啟動Zookeeper
