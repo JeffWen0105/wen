@@ -3,7 +3,11 @@
 	要求程式: Vmware player等級以上
 	預設系統配置: 8 G, 4 Cores
 	最低系統配置: 4 G, 2 Cores (運行較大資料，可能會程式崩潰)
-	Python : 3.6.9
+	Python及主要套件版本
+		python: 3.6.9
+		pandas: 1.0.1
+		numpy: 1.18.1
+		pyspark: 2.4.5   # pyspark版本要與spark一致!!
 	Hadoop生態系版本:
 		hadoop:3.2.1      
 		spark:2.4.5
@@ -83,8 +87,8 @@
 		3.  ./bin/spark-submit \
 			--class org.apache.spark.examples.SparkPi \
 			--master spark://bdse.example.org:7077 \
-			/usr/local/spark/bin/examples/jars/spark-examples*.jar \
-			10
+			/usr/local/spark/examples/jars/spark-examples*.jar \
+			10 2>/dev/null
 		
 	使用kafka 方法:
 		# 啟動Zookeeper
