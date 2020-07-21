@@ -1,0 +1,5 @@
+flask
+requests
+gunicorn
+line-bot-sdk
+instagram-scraper
