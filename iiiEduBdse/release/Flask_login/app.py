@@ -13,7 +13,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'localhost'          # 登入ip
+app.config['MYSQL_HOST'] = '127.0.0.1'          # 登入ip
 app.config['MYSQL_USER'] = 'root'               # 登入帳號
 app.config['MYSQL_PASSWORD'] = 'root'           # 登入密碼
 app.config['MYSQL_DB'] = 'db'                   # 登入資料庫名稱
@@ -49,9 +49,10 @@ def register():
 def login():
     if request.method == 'POST':
         email = request.form['email']
+        print("email:",email)
         password = request.form['password'].encode('utf-8')
         curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        curl.execute("SELECT * FROM users WHERE email=%s", (email))
+        curl.execute("SELECT * FROM users WHERE email=%s", [email])
         user = curl.fetchone()
         curl.close()
         if user == None:
